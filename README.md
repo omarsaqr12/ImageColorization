@@ -27,11 +27,20 @@ This project implements state-of-the-art automatic image colorization models bas
 
 ### 🎯 Key Achievements
 
-| Metric | Best Variant | Baseline ECCV16 | Improvement |
-|--------|--------------|-----------------|-------------|
-| PSNR ↑ | 27.42 dB | 25.31 dB | +8.3% |
-| SSIM ↑ | 0.934 | 0.912 | +2.4% |
-| LPIPS ↓ | 0.089 | 0.124 | +28.2% |
+| Achievement | Details |
+|-------------|---------|
+| 🏆 **Best Teacher** | variant_097 with Global Semantic Head + GAN + Perceptual Loss |
+| 📦 **Max Compression** | **1467× smaller** (MobileNet-8x: 0.08 MB vs Teacher: 122.97 MB) |
+| 📈 **Student > Teacher** | Distilled students outperform teacher on all metrics |
+| 🔬 **Experiments** | 200+ variant configurations systematically evaluated |
+
+**Distillation Results (MobileNet-8x vs Teacher):**
+| Metric | Teacher | Student | Improvement |
+|--------|---------|---------|-------------|
+| PSNR ↑ | 23.04 dB | **24.68 dB** | +7.1% |
+| SSIM ↑ | 0.926 | **0.932** | +0.6% |
+| LPIPS ↓ | 0.074 | **0.057** | +23.0% |
+| Size | 122.97 MB | **0.08 MB** | 1467× smaller |
 
 ---
 
@@ -194,32 +203,75 @@ python Importantcode/run_full_pipeline.py
 
 ---
 
+## 🧪 Experiments
+
+### Variant Configuration Search
+
+We systematically explored **200+ model variants** by combining these architectural features:
+
+| Flag | Description | Options |
+|------|-------------|---------|
+| `use_multiscale` | Spatial Pyramid Pooling at bottleneck (1×1, 2×2, 4×4 bins) | ✓ / ✗ |
+| `use_global_semantic_head` | Global semantic embedding with FiLM modulation | ✓ / ✗ |
+| `use_perceptual_loss` | VGG-based perceptual loss (feature matching) | ✓ / ✗ |
+| `use_attention` | Squeeze-and-Excitation (SE) blocks | ✓ / ✗ |
+| `use_gan` | Adversarial training with PatchGAN discriminator | ✓ / ✗ |
+| `use_color_classification` | 313-bin color classification head | ✓ / ✗ |
+| `use_class_rebalance` | Rebalancing for rare colors | ✓ / ✗ |
+| `weight_init_mode` | Weight initialization strategy | `pretrained` / `random` |
+
+**Configuration Constraints:**
+- If `use_color_classification=True` → `use_class_rebalance=True` (forced)
+- If `use_gan=True` → requires `use_perceptual_loss=True` OR `use_attention=True`
+
+### Best Teacher Model: `variant_097_random`
+
+The best performing teacher model configuration:
+
+```json
+{
+  "use_multiscale": false,
+  "use_global_semantic_head": true,
+  "use_perceptual_loss": true,
+  "use_attention": false,
+  "use_gan": true,
+  "use_color_classification": true,
+  "use_class_rebalance": true,
+  "weight_init_mode": "random"
+}
+```
+
+**Key Findings:**
+- 🎯 **Global Semantic Head** + **Perceptual Loss** + **GAN** is the winning combination
+- 🔄 **Random initialization** outperformed pretrained weights
+- ❌ Multiscale pooling and SE attention did not improve results
+- ✅ Color classification with class rebalancing helped with rare colors
+
+---
+
 ## 🤖 Models
 
-### Teacher Models (Variants)
+### Teacher Model Specifications
 
-We trained **200+ variant models** with different configurations:
+| Property | Value |
+|----------|-------|
+| Architecture | ECCV16 + Global Semantic Head |
+| Parameters | **32.24M** |
+| Size | **122.97 MB** |
+| Training | CIFAR-10 with two-phase schedule |
 
-| Component | Options |
-|-----------|---------|
-| **Base Architecture** | ECCV16, SIGGRAPH17 |
-| **Attention** | SE blocks, CBAM, ILA |
-| **Normalization** | BatchNorm, GroupNorm, LayerNorm |
-| **Activation** | ReLU, LeakyReLU, GELU, Swish |
-| **Initialization** | Random, Pretrained |
+### Student Models (Knowledge Distillation)
 
-### Student Models (Distilled)
+We distilled the teacher into compact **MobileNet-style** students:
 
-Lightweight models created via knowledge distillation:
+| Model | Parameters | Size | Compression | PSNR ↑ | SSIM ↑ | LPIPS ↓ |
+|-------|------------|------|-------------|--------|--------|---------|
+| **Teacher** | 32.24M | 122.97 MB | 1× | 23.04 dB | 0.926 | 0.074 |
+| MobileNet-2x | 0.24M | 0.93 MB | **132×** | 24.75 dB | 0.933 | 0.056 |
+| MobileNet-4x | 0.07M | 0.26 MB | **466×** | 24.77 dB | 0.933 | 0.057 |
+| MobileNet-8x | 0.02M | 0.08 MB | **1467×** | 24.68 dB | 0.932 | 0.057 |
 
-| Model | Parameters | Size Reduction | PSNR | SSIM |
-|-------|------------|----------------|------|------|
-| Lightweight-2x | 1.2M | 2× smaller | 26.8 | 0.921 |
-| Lightweight-4x | 0.6M | 4× smaller | 26.1 | 0.908 |
-| Lightweight-8x | 0.3M | 8× smaller | 25.2 | 0.891 |
-| MobileNet-2x | 1.4M | 2× smaller | 27.1 | 0.928 |
-| MobileNet-4x | 0.7M | 4× smaller | 26.4 | 0.915 |
-| MobileNet-8x | 0.35M | 8× smaller | 25.5 | 0.897 |
+> 🎉 **Remarkable Result:** All student models **outperform** the teacher on PSNR, SSIM, and LPIPS metrics while being **100-1400× smaller**! This demonstrates the effectiveness of knowledge distillation for model compression.
 
 ---
 
