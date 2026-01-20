@@ -1,0 +1,213 @@
+# ==============================================================================
+# Image Colorization with Knowledge Distillation - .gitignore
+# ==============================================================================
+
+# ======================== Python ========================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+pytestdebug.log
+
+# Translations
+*.mo
+*.pot
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# pyenv
+.python-version
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# ======================== IDE ========================
+# VS Code
+.vscode/
+*.code-workspace
+
+# PyCharm / JetBrains
+.idea/
+*.iml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# ======================== OS Generated ========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+
+# ======================== Data & Models ========================
+# Large model weights (download from Google Drive)
+*.pt
+*.ckpt
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+
+# Model weights are too large for git - download from Google Drive
+# See README.md for download links
+models/
+
+# Datasets (should be downloaded separately)
+data/
+datasets/
+cifar-10-*/
+ILSVRC/
+imagenet/
+ImageNet/
+
+# Experiment outputs (generated during training)
+experiments/
+results/
+outputs/
+logs/
+runs/
+
+# ======================== Project Specific ========================
+# Generated checkpoints during training (but keep the ones in models/)
+checkpoints/
+
+# Downloaded pretrained colorization models
+*.caffemodel
+
+# Colorization demo outputs
+colorization_results/
+demo_outputs/
+comparison_outputs/
+
+# Large result files
+*.json.bak
+evaluation_results/
+analysis_results/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.log
+
+# ======================== Media ========================
+# Large demo videos
+demo.mp4
+
+# Generated images (keep training history plots)
+# *.png
+# !**/training_history.png
+# !**/comparison*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.tiff
+
+# ======================== Archives ========================
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# ======================== Misc ========================
+# Secrets and credentials
+.env
+.env.*
+secrets.yaml
+credentials.json
+
+# Local configuration
+local_config.py
+config.local.py
