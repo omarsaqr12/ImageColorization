@@ -10,7 +10,7 @@
 
 *Automatic image colorization using deep learning with knowledge distillation for model compression*
 
-[Features](#-features) • [Installation](#-installation) • [Quick Start](#-quick-start) • [Models](#-models) • [Results](#-results)
+[Features](#-features) • [Installation](#-installation) • [Quick Start](#-quick-start) • [Models](#-models) • [Results](#-results) • [Documentation](#-documentation)
 
 </div>
 
@@ -134,8 +134,13 @@ This project implements state-of-the-art automatic image colorization models bas
 │   └── distilled_students/     # 6 compressed student models
 │
 ├── requirements.txt            # Python dependencies
+├── setup.py                    # Package installation script
 ├── .gitignore                  # Git ignore rules
-└── README.md                   # This file
+├── README.md                   # This file
+├── APPLICATION_ANSWERS.md      # Application responses
+└── docs/                       # Additional documentation
+    ├── PROJECT_OVERVIEW.md     # Project structure overview
+    └── TECHNICAL_DETAILS.md   # Technical implementation details
 
 > **Note:** The `models/` folder is not included in the repository due to file size.
 > Download from [Google Drive](https://drive.google.com/drive/folders/1ojJ07dq15GKh0d-W7HLnlD3LbqI48vgT?usp=sharing) and place in the project root.
@@ -198,7 +203,7 @@ python code/src/training/variant_training_pipeline.py --variant_id 001 --init_mo
 python code/scripts/training/train_multiple_student_sizes.py
 
 # Run the full training pipeline (200+ variants)
-python Importantcode/run_full_pipeline.py
+python code/scripts/training/run_full_pipeline.py
 ```
 
 ---
@@ -379,6 +384,17 @@ pip install lpips pytorch-fid
   year={2017}
 }
 ```
+
+---
+
+## 📚 Documentation
+
+Additional documentation is available in the `docs/` folder:
+
+- **[Project Overview](docs/PROJECT_OVERVIEW.md)**: High-level project structure and components
+- **[Technical Details](docs/TECHNICAL_DETAILS.md)**: Deep dive into architecture, training, and evaluation
+
+For application-related responses, see **[APPLICATION_ANSWERS.md](APPLICATION_ANSWERS.md)**.
 
 ---
 
