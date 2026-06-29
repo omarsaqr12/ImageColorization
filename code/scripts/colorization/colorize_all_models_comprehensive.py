@@ -437,7 +437,7 @@ def process_dataset(dataset_name, all_models, device, num_images=500, output_dir
         
         imagenet_root = os.environ.get(
             "IMAGENET_VAL_ROOT",
-            "/home/mohab/Downloads/work/a/imagenet-object-localization-challenge/ILSVRC"
+            "./data/imagenet/ILSVRC"
         )
         
         if not os.path.exists(imagenet_root):

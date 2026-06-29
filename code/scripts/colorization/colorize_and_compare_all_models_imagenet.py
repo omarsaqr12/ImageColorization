@@ -412,9 +412,9 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description='Colorize and compare ImageNet images using all models')
-    parser.add_argument('--imagenet_path', type=str, 
-                       default='/home/mohab/Downloads/work/a/imagenet-object-localization-challenge/ILSVRC/Data/CLS-LOC',
-                       help='Path to ImageNet dataset (default: /home/mohab/Downloads/work/a/imagenet-object-localization-challenge/ILSVRC/Data/CLS-LOC)')
+    parser.add_argument('--imagenet_path', type=str,
+                       default=os.environ.get('IMAGENET_VAL_ROOT', './data/imagenet/ILSVRC/Data/CLS-LOC'),
+                       help='Path to ImageNet dataset (defaults to $IMAGENET_VAL_ROOT or ./data/imagenet/ILSVRC/Data/CLS-LOC)')
     parser.add_argument('--num_images', type=int, default=1000, help='Number of images to colorize (default: 1000)')
     parser.add_argument('--split', type=str, default='val', choices=['train', 'val', 'test'],
                        help='ImageNet split to use (default: val)')

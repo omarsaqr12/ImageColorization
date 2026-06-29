@@ -177,8 +177,8 @@ def evaluate_imagenet_models(imagenet_path, num_samples=100):
     print("🎉 Evaluation completed!")
 
 def main():
-    # Set the ImageNet path
-    imagenet_path = "/home/mohab/Downloads/work/colorization/imagenet-object-localization-challenge/ILSVRC/Data/CLS-LOC/"
+    # Set the ImageNet path (override via the IMAGENET_VAL_ROOT environment variable)
+    imagenet_path = os.environ.get("IMAGENET_VAL_ROOT", "./data/imagenet/ILSVRC/Data/CLS-LOC/")
     
     # Number of samples to evaluate
     num_samples = 100  # Start with 100 for testing

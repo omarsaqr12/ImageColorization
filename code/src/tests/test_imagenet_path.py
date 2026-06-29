@@ -20,8 +20,8 @@ def main():
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(f"Using device: {device}")
     
-    # Set the ImageNet path
-    imagenet_path = "/home/mohab/Downloads/work/colorization/imagenet-object-localization-challenge/ILSVRC/Data/CLS-LOC/"
+    # Set the ImageNet path (override via the IMAGENET_VAL_ROOT environment variable)
+    imagenet_path = os.environ.get("IMAGENET_VAL_ROOT", "./data/imagenet/ILSVRC/Data/CLS-LOC/")
     
     print(f"ImageNet path: {imagenet_path}")
     

@@ -4,7 +4,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-1.9+-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
-![License](https://img.shields.io/badge/License-Academic-green?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 **Advanced Machine Learning Final Project**
 
@@ -67,8 +67,8 @@ This project implements state-of-the-art automatic image colorization models bas
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/image-colorization-distillation.git
-   cd image-colorization-distillation
+   git clone https://github.com/omarsaqr12/ImageColorization.git
+   cd ImageColorization
    ```
 
 2. **Create virtual environment**
@@ -136,8 +136,8 @@ This project implements state-of-the-art automatic image colorization models bas
 ├── requirements.txt            # Python dependencies
 ├── setup.py                    # Package installation script
 ├── .gitignore                  # Git ignore rules
+├── LICENSE                     # MIT license
 ├── README.md                   # This file
-├── APPLICATION_ANSWERS.md      # Application responses
 └── docs/                       # Additional documentation
     ├── PROJECT_OVERVIEW.md     # Project structure overview
     └── TECHNICAL_DETAILS.md   # Technical implementation details
@@ -394,13 +394,11 @@ Additional documentation is available in the `docs/` folder:
 - **[Project Overview](docs/PROJECT_OVERVIEW.md)**: High-level project structure and components
 - **[Technical Details](docs/TECHNICAL_DETAILS.md)**: Deep dive into architecture, training, and evaluation
 
-For application-related responses, see **[APPLICATION_ANSWERS.md](APPLICATION_ANSWERS.md)**.
-
 ---
 
 ## 📄 License
 
-This project is for academic and educational purposes as part of the Advanced Machine Learning course.
+Released under the [MIT License](LICENSE). Originally developed as the final project for an Advanced Machine Learning course; the colorization backbones build on the work of Zhang et al. (see [References](#-references)).
 
 ---
 

@@ -207,7 +207,7 @@ def main() -> None:
     # evaluator will internally sample up to num_samples images from it.
     imagenet_root = os.environ.get(
         "IMAGENET_VAL_ROOT",
-        "/home/mohab/Downloads/work/a/imagenet-object-localization-challenge/ILSVRC",
+        "./data/imagenet/ILSVRC",
     )
 
     # 1. Generate all valid configurations

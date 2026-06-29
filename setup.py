@@ -23,7 +23,7 @@ setup(
     description="Automatic image colorization using deep learning with knowledge distillation for model compression",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/image-colorization-distillation",
+    url="https://github.com/omarsaqr12/ImageColorization",
     packages=find_packages(where="code"),
     package_dir={"": "code"},
     classifiers=[
@@ -46,11 +46,6 @@ setup(
             "pytest-cov>=2.0",
             "black>=21.0",
             "flake8>=3.8",
-        ],
-    },
-    entry_points={
-        "console_scripts": [
-            "colorize-demo=colorization.demo_release:main",
         ],
     },
 )

@@ -11,12 +11,12 @@ def find_imagenet_path():
     """Find the ImageNet dataset path"""
     print("Searching for ImageNet dataset...")
     
-    # Possible base directories
+    # Possible base directories (IMAGENET_VAL_ROOT takes priority if set)
     base_dirs = [
-        "/home/mohab/Downloads/work/colorization/",
-        "/Downloads/work/colorization/",
+        os.environ.get("IMAGENET_VAL_ROOT", ""),
+        "./data/imagenet/",
         "./",
-        "../"
+        "../",
     ]
     
     # Look for the imagenet directory
