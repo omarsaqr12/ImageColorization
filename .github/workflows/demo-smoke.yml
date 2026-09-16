@@ -1,0 +1,55 @@
+name: Image demo and model import checks
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install smoke-test dependencies
+        run: python -m pip install numpy pillow
+      - name: Compile edited Python entry point and tests
+        run: python -m py_compile scripts/colorize_image.py tests/test_colorize_image.py
+      - name: Run offline regression checks
+        run: python -m unittest discover -s tests -v
+
+  backbone-import:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU-only torch (no model checkpoints)
+        run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Install colorizer imports
+        run: python -m pip install numpy pillow matplotlib scikit-image 'ipython>=8.0'
+      - name: Run both backbones on a synthetic image without downloading checkpoints
+        run: |
+          python - <<'PY'
+          import sys
+          import numpy as np
+          import torch
+          sys.path.insert(0, 'code/colorization')
+          from colorizers import eccv16, siggraph17, preprocess_img, postprocess_tens
+          torch.set_num_threads(2)
+          image = np.full((32, 32, 3), 128, dtype=np.uint8)
+          original_l, resized_l = preprocess_img(image, HW=(32, 32))
+          for name, factory in [('ECCV16', eccv16), ('SIGGRAPH17', siggraph17)]:
+              model = factory(pretrained=False).eval()
+              with torch.inference_mode():
+                  predicted_ab = model(resized_l)
+              assert predicted_ab.shape == (1, 2, 32, 32), (name, predicted_ab.shape)
+              output = postprocess_tens(original_l, predicted_ab)
+              assert output.shape == image.shape and np.isfinite(output).all(), name
+              print(f'{name}: {sum(p.numel() for p in model.parameters()):,} parameters; synthetic forward/postprocess OK')
+          PY
