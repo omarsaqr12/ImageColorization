@@ -8,6 +8,8 @@ Pillow>=8.0.0
 opencv-python>=4.5.0
 scipy>=1.6.0
 tqdm>=4.60.0
+# The existing ECCV16 and colorizer utility modules import IPython at module load.
+ipython>=8.0
 
 # Optional but Recommended for Full Functionality
 lpips>=0.1.4
