@@ -1,4 +1,4 @@
-name: Offline image-demo smoke tests
+name: Image demo and model import checks
 on:
   pull_request:
   workflow_dispatch:
@@ -19,3 +19,27 @@ jobs:
         run: python -m py_compile scripts/colorize_image.py tests/test_colorize_image.py
       - name: Run offline regression checks
         run: python -m unittest discover -s tests -v
+
+  backbone-import:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU-only torch (no model checkpoints)
+        run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Install colorizer imports
+        run: python -m pip install numpy pillow matplotlib scikit-image 'ipython>=8.0'
+      - name: Import and instantiate both backbones without downloading weights
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, 'code/colorization')
+          from colorizers import eccv16, siggraph17
+          for name, factory in [('ECCV16', eccv16), ('SIGGRAPH17', siggraph17)]:
+              model = factory(pretrained=False)
+              print(f'{name}: {sum(p.numel() for p in model.parameters()):,} parameters; instantiation OK')
+          PY
